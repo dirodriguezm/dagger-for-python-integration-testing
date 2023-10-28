@@ -6,10 +6,8 @@ def connect_db(db_url: str):
     return conn
 
 
-def query_hello_world() -> list:
-    conn = connect_db(
-        "dbname=postgres user=postgres password=postgres host=localhost port=5432"
-    )
+def query_hello_world(db_url) -> list:
+    conn = connect_db(db_url)
     cur = conn.cursor()
     cur.execute("SELECT 'Hello, World!'")
     result = cur.fetchall()
@@ -19,4 +17,5 @@ def query_hello_world() -> list:
 
 
 def main() -> None:
-    print(query_hello_world())
+    db_url = "dbname=postgres user=postgres password=postgres host=localhost port=5432"
+    print(query_hello_world(db_url))
