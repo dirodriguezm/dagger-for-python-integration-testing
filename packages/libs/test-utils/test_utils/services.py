@@ -1,7 +1,10 @@
 import dagger
+from typing import Tuple
 
 
-async def create_postgres_container(dagger_client: dagger.Client) -> str:
+async def create_postgres_container(
+    dagger_client: dagger.Client,
+) -> Tuple[str, dagger.Container]:
     postgres = (
         dagger_client.container()
         .from_("postgres")
@@ -13,4 +16,4 @@ async def create_postgres_container(dagger_client: dagger.Client) -> str:
     )
     tunnel = await dagger_client.host().tunnel(postgres).start()
     endpoint = await tunnel.endpoint()
-    return endpoint
+    return endpoint, postgres
